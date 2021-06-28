@@ -11,6 +11,16 @@ if ( ! defined( '_S_VERSION' ) ) {
 	// Replace the version number of the theme on each release.
 	define( '_S_VERSION', '1.0.0' );
 }
+	
+	$_CATEGORIES = [
+			83 => 'Квартиры',
+			90 => 'Дома',
+			89 => 'Частный сектор',
+			91 => 'Комнаты',
+			85 => 'Отели',
+			86=> 'Мини-отели',
+			87 => 'Пансионаты',
+	];
 
 if ( ! function_exists( 'krymking_setup' ) ) :
 	/**
@@ -480,7 +490,6 @@ function num_word($value, $words, $show = true) {
 	if ($num > 19) { 
 		$num = $num % 10; 
 	}
-	
 	$out = ($show) ?  $value . ' ' : '';
 	switch ($num) {
 		case 1:  $out .= $words[0]; break;
@@ -525,6 +534,10 @@ function address($post_id) {
 }
 
 function price_total($price, $day) {
+	if(empty($price)){
+		$price = 0;
+	}
+	
 	if (!empty($day)) {
 		$total = $price * $day;
 	} else {
@@ -1044,7 +1057,7 @@ add_filter('posts_where', 'my_posts_where');
 
 
 // filter
-function filters() {
+function filters($return = false) {
 	if (!empty($_REQUEST['order'])) {
 		$order = $_REQUEST['order'];
 	} else {
@@ -1180,21 +1193,20 @@ function filters() {
 		$sql .= "AND wp_posts.ID IN (SELECT DISTINCT object_id FROM wp_term_relationships WHERE term_taxonomy_id IN(".implode(',',$_POST['type_hotels'])."))";
 	}
 	// Сортировка объектов
-	$sql .= "GROUP BY wp_posts.ID ORDER BY wp_postmeta.meta_key ".$order." LIMIT 0, 10";
+	$sql .= "GROUP BY wp_posts.ID ORDER BY wp_postmeta.meta_key ".$order."";
 
 	//echo $sql;
 
 	$result = $wpdb->get_results($sql);
-	
-	
+	if($return){
+		return $result;
+	}
 	function dates_in_range() {
 		$startDate = $_POST['check_in'];
 		$endDate = $_POST['check_out'];
 
 		//echo $startDate."<br>".$endDate;
-
-
-
+		
 		if( $startDate != 0 && $endDate != 0 ) {
 			foreach( get_field('free_dates') as $date ) {
 
@@ -1331,7 +1343,9 @@ function init() {
 			$('.show-map').click();
 			}
 
-			$('html, body').animate({ scrollTop: 0 }, 'slow');
+            $('html, body').animate({ scrollTop: document.querySelector('.side-right.show-maps').getBoundingClientRect().top + pageYOffset }, 'slow', function(){
+                console.log(document.querySelector('.side-right.show-maps').getBoundingClientRect().top + pageYOffset)
+            });
 		});
 
 		},
@@ -1364,7 +1378,8 @@ function init() {
 	
 
 	<?
-	exit;
+	return false;
+	//exit;
 }
 add_action('wp_ajax_nopriv_filters','filters');
 add_action('wp_ajax_filters','filters');
@@ -1393,15 +1408,65 @@ add_action('wp_ajax_nopriv_search_suggest','search_suggest');
 add_action('wp_ajax_search_suggest','search_suggest');
 
 function data_param() {
-	$_SESSION['check_in'] = $_POST['check_in'];
-	$_SESSION['check_out'] = $_POST['check_out'];
-
-	$_SESSION['adults'] = $_POST['adults'];
-	$_SESSION['children'] = $_POST['children'];
-	$_SESSION['babies'] = $_POST['babies'];
-
-	$_SESSION['counts_guests'] = $_POST['counts_guests'];
-
+	$post_id = $_POST['post_id'];
+	$fieldDates = get_field('free_dates', $post_id);
+	$minimumBooking = get_field('minimum_booking', $post_id)['value'];
+	$countBooking = days($_POST['check_in'], $_POST['check_out']);
+	$countsGuests = get_field('guests_count', $post_id);
+	if ( $fieldDates ) {
+		
+		$dates = [];
+		
+		foreach ($fieldDates as $date) {
+			
+			$interval_date = date_diff(date_create($date['date_from']), date_create($date['date_to']))->days+1;
+			
+			for($i = 1; $i <= $interval_date ; $i++){
+				
+				$dates[] = date('d.m.Y',(strtotime($date['date_from'])+86400*($i-1)));
+				
+			}
+			
+		}
+		
+	} else {
+		$disabled_dates = "null";
+	}
+	
+	$flag = false;
+	$result = filters(true);
+	foreach($result as $res){
+		if($res->ID === $_POST['post_id']){
+			$flag = true;
+			break;
+		}
+	}
+	
+	$a=1;
+	if($flag){
+		
+		$_SESSION['post_id'] = $_POST['post_id'];
+		$_SESSION['check_in'] = $_POST['check_in'];
+		$_SESSION['check_out'] = $_POST['check_out'];
+		
+		$_SESSION['adults'] = $_POST['adults'];
+		$_SESSION['children'] = $_POST['children'];
+		$_SESSION['babies'] = $_POST['babies'];
+		
+		$_SESSION['counts_guests'] = $_POST['counts_guests'];
+	}else{
+		if(in_array($_POST['check_in'], $dates, false) || in_array($_POST['check_out'], $dates,false)){
+			echo 'Вы не можете забронировать это жилье на выбранный период, т.к. оно на этот период занято. Посмотрите, пожалуйста, свободные даты в Календаре бронирования' . '<br>';
+		}
+		if($countBooking < $minimumBooking){
+			echo 'Вы не можете забронировать это жилье на выбранный период, т.к. минимальный период проживания в нем — ' . $minimumBooking .
+					' количество суток. Увеличьте период проживания до необходимого минимального кол-ва суток';
+		}
+		if($countsGuests < ($_POST['adults'] + $_POST['children'])){
+			echo 'Вы не можете забронировать это жилье, т.к. в нем возможно проживание не более - '. $countsGuests .' человек. Посмотрите, пожалуйста, другие объекты на нашем сайте';
+		}
+		
+	}
 	exit;
 }
 add_action('wp_ajax_nopriv_data_param','data_param');
@@ -1734,43 +1799,60 @@ function pricePeriod($postid) { ?>
 function dates_free($postid) { ?>
 <div class="booking-calendar free-dates"></div>
 <?
- 
-if ( get_field('free_dates', $postid) ) {
-
-	$dates = array();
-
-	foreach (get_field('free_dates', $postid) as $date) {
+	
+	if ( get_field('free_dates', $postid) ) {
 		
-		$interval_date = date_diff(date_create($date['date_from']), date_create($date['date_to']))->days+1;
-
-		for($i = 1; $i <= $interval_date ; $i++){
-
-			$dates[] = date('Y-n-j',(strtotime($date['date_from'])+86400*($i-1)));
- 
+		$dates = [];
+		
+		foreach (get_field('free_dates', $postid) as $date) {
+			
+			$interval_date = date_diff(date_create($date['date_from']), date_create($date['date_to']))->days+1;
+			
+			for($i = 1; $i <= $interval_date; $i++){
+				
+				$dates[] = date('Y-n-j',(strtotime($date['date_from'])+86400*($i-1)));
+				
+			}
+			
 		}
-
-	}	
- 
-	$disabledDays = json_encode($dates);
-} else {
-	$disabledDays = "null";
-}
-
-?>
- 
-<script>
-	var	date = new Date();
-		date.setDate(date.getDate());
 		
-      	disabledDays = <?=$disabledDays;?>;
+		$disabledDays = json_encode($dates);
+	} else {
+		$disabledDays = "null";
+	} ?>
+	
+
+<script>
+	
+	var disabledDays = <?=$disabledDays?>;
+		date = new Date();
+		date.setDate(date.getDate());
  
 	$('.free-dates').datepicker({
 		monthNames: ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'],
 		monthNamesShort: ['Янв','Фев','Мар','Апр','Май','Июн','Июл','Авг','Сен','Окт','Ноя','Дек'],
 		dayNamesMin: ['Пн','Вт','Ср','Чт','Пт','Сб','Вс'],
 		range: 'period', // режим - выбор периода
-		minDate: new Date(),
+		minDate: date,
 		dateFormat: "dd.mm.yy",
+		beforeShowDay: function(date) {
+		
+		var     m = date.getMonth(),
+				d = date.getDate(),
+				y = date.getFullYear();
+		
+		if(disabledDays) {
+			for (i = 0; i < disabledDays.length; i++) {
+				if($.inArray(y + '-' + (m+1) + '-' + d,disabledDays) != -1) {
+					return [true, 'selected-day', 'День заблокирован'];
+				} else {
+					return [true, '', ''];
+				}
+			}
+		} else {
+			return [true, '', ''];
+		}
+	},
 		onSelect: function(dateText, inst, extensionRange) {
  
 			if (extensionRange.startDateText != extensionRange.endDateText) {
@@ -1780,11 +1862,11 @@ if ( get_field('free_dates', $postid) ) {
 					dataType: "html",
 					data: {
 						'action'    : 'freeDates',
-						'post_ID'   : $('input[name="post_ID"]').val(),
+						'post_ID'   : $('input[name="post_id"]').val(),
 						'date_from' : extensionRange.startDateText,
 						'date_to'   : extensionRange.endDateText,
 					},
-            		beforeSend: function( xhr){
+            		beforeSend: function(xhr){
             		 	$('.ajax').html('');
  						$('.ajax').append('<div class="spinner"></div>');
             		},
@@ -1795,36 +1877,18 @@ if ( get_field('free_dates', $postid) ) {
 				});
 			}
 
-		},
-        beforeShowDay: function(date) {
+		}
+	});
 
-            var m = date.getMonth(), 
-				d = date.getDate(), 
-				y = date.getFullYear();
- 
-			if(disabledDays) {
-				for (i = 0; i < disabledDays.length; i++) {
-					if($.inArray(y + '-' + (m+1) + '-' + d,disabledDays) != -1) {
-						return [true, 'selected-day', 'День заблокирован'];
-					} else {
-						return [true, '', ''];
-					}
-				}
-			} else {
-				return [true, '', ''];
-			}
-        }
-	});	
-
-	$('.free-dates').datepicker('setDate', ['<?=$date['date_from'];?>', '<?=$date['date_to'];?>']);
+	$('.free-dates').datepicker('setDate', ['<?=$date['date_from']?>', '<?=$date['date_to']?>']);
 </script>
 <? }
 
 function freeDates() {
-
+	
 	$date_from = $_POST['date_from'];
 	$date_to   = $_POST['date_to'];
-	$post_id   = $_POST['post_ID'];
+	$post_id   = $_POST['post_id'];
 
 	$field_key = "field_602f6aea7ce20";
 
@@ -1834,12 +1898,12 @@ function freeDates() {
 
 		$fields = get_field('free_dates', $post_id);
 
-		$form = array_search($_POST['date_from'], array_column($fields, 'date_from'));
+		$from = array_search($_POST['date_from'], array_column($fields, 'date_from'));
 		$to = array_search($_POST['date_to'], array_column($fields, 'date_to'));
 
-		if ( is_bool($form) == false && is_bool($to) == false ) {
+		if ( is_bool($from) == false && is_bool($to) == false ) {
 
-			$result = array();
+			$result = [];
 
 			$row = get_field('free_dates', $post_id);
 
@@ -1875,8 +1939,7 @@ function freeDates() {
 	update_field( $field_key, $row, $post_id );
 
 	echo dates_free($post_id);
-
-
+	
 	exit;
 }
 add_action('wp_ajax_nopriv_freeDates','freeDates');
@@ -2037,6 +2100,10 @@ function properties_romms() { ?>
 		<? } ?>
 		<? if( get_field('guests_count') ) { ?>
 			<li>Количество гостей: <span><?=num_word(get_field('guests_count'), array("взрослый","взрослых") );?></span></li>
+		<? } ?>
+		<?php $countDays = get_field('minimum_booking')['value'];
+		if( $countDays ) { ?>
+			<li>Минимальное количество дней: <span><?=num_word($countDays, array("день","дней") );?></span></li>
 		<? } ?>
 		<li>Количество комнат: <span><?=the_field('rooms_count');?></span></li>
 		<li>Количество двухместных кроватей: <span><?=the_field('double_beds');?></span></li>
@@ -2449,13 +2516,13 @@ function free_calendar($post_id = 0) { ?>
 	<h3>Календарь и свободные даты</h3>
 	<div class="booking-calendar free-calendar"></div>
 	<div class="marker-info">
-		<div class="marker"><span class="circle circle-busy"></span> занято</div>
-		<div class="marker"><span class="circle circle-free"></span> свободно</div>
+		<div class="marker"><span class="circle circle-busy"></span>занято</div>
+		<div class="marker"><span class="circle circle-free"></span>свободно</div>
 	</div>
 	<?
 	if ( get_field('free_dates', $post_id) ) {
 
-		$dates = array();
+		$dates = [];
 
 		foreach (get_field('free_dates', $post_id) as $date) {
 			
@@ -2467,16 +2534,19 @@ function free_calendar($post_id = 0) { ?>
 	
 			}
 
-		}	
-	
-		$disabled_dates = json_encode($dates);
+		}
+		
+		$disabledDays = json_encode($dates);
 	} else {
-		$disabled_dates = "null";
+		$disabledDays = "null";
 	} ?>
 
 	<script type="text/javascript">
+		
+		var disabledDays = <?=$disabledDays?>;
+		
 		jQuery(document).ready(function ($) {
-			var disabledDays = <?=$disabled_dates;?>;
+			
 				date = new Date();
 				date.setDate(date.getDate());
 
@@ -2518,7 +2588,7 @@ function room_calendar() { ?>
 	<div class="modal-calendar">
 		<?=free_calendar($_POST['post_id']);?>
 	</div>
-	<? 
+	<?
 }
 add_action('wp_ajax_nopriv_room_calendar','room_calendar');
 add_action('wp_ajax_room_calendar','room_calendar');

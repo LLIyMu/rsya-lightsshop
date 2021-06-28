@@ -50,7 +50,7 @@
 				<div class="period"><?=guests_nights();?></div>
 				<div class="price"><span><?=the_price();?> RUB</span> за ночь</div>
 			</div>
-			<div class="hotel-total">Всего: <span><?=price_total(the_price(), days($_SESSION['check_in'], $_SESSION['check_out']) );?> RUB</span></div>
+			<div class="hotel-total">Всего: <span><?= price_total(the_price(), days($_SESSION['check_in'], $_SESSION['check_out']) )?> RUB</span></div>
 		</div>
 		<?=services();?>
 		<a href="<?=get_permalink();?>" class="btn-more" target="_blank">Подробнее</a>

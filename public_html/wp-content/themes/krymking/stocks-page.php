@@ -8,7 +8,7 @@ global $current_user;
 	<?if (function_exists('dimox_breadcrumbs')) dimox_breadcrumbs();?>
 </div>
 <center>
-<img src="<?=get_template_directory_uri();?>/images/stocks.png" alt="Акции">
+<img src="<?=get_template_directory_uri();?>/images/stocks.jpg" alt="Акции">
 </center>
 <?php
 get_footer();

@@ -30,7 +30,7 @@ $territory[] = get_field_object('field_606461f0b4fbb', $postid); // Столов
 $territory[] = get_field_object('field_606461d8b4fba', $postid); // Общая кухня
 $territory[] = get_field_object('field_606461d6b4fb9', $postid); // Бар
 $territory[] = get_field_object('field_600915a8f72b2', $postid); // Беседка
-//$territory[] = get_field_object('field_60057e7c2e1c0', $postid); // Терраса
+// $territory[] = get_field_object('field_60057e7c2e1c0', $postid); // Терраса
 $territory[] = get_field_object('field_60091626f72b5', $postid); // Веранда
 $territory[] = get_field_object('field_6064635c674b9', $postid); // Собственный пляж
 $territory[] = get_field_object('field_60091642f72b6', $postid); // Бассейн
@@ -49,6 +49,7 @@ $territory[] = get_field_object('field_6009183c2a39f', $postid); // Футбол
 $territory[] = get_field_object('field_606464f5f5461', $postid); // Баскетбол
 $territory[] = get_field_object('field_606464f3f5460', $postid); // Большой теннис
 $territory[] = get_field_object('field_600919092a3a3', $postid); // Курение в специально отведенных местах
+$territory[] = get_field_object('field_60792c963e8bd', $postid); // Лифт
 $territory[] = get_field_object('field_600919d84971f', $postid); // Для гостей с ограниченными физическими возможностями
 $territory[] = get_field_object('field_608677aa54e39', $postid); // Конференц-зал
 
@@ -383,7 +384,7 @@ $field3 = get_field_object('field_604afd438ab87');
 
 		<div class="input-group group-vertical <?=$field1['name'];?>">
 
-			<label class="input-title title-radio"><?=$$field1['label'];?></label>
+			<label class="input-title title-radio"><strong><?=$field1['label'];?></strong></label>
 
 			<?foreach ($field1['choices'] as $field_key => $field_value) { ?>
 
@@ -398,7 +399,7 @@ $field3 = get_field_object('field_604afd438ab87');
 
 		<div class="input-group group-vertical <?=$field2['name'];?>">
 
-			<label class="input-title title-radio"><?=$field2['label'];?></label>
+			<label class="input-title title-radio"><strong><?=$field2['label'];?></strong></label>
 
 			<?foreach ($field2['choices'] as $field_key => $field_value) { ?>
 
@@ -413,7 +414,7 @@ $field3 = get_field_object('field_604afd438ab87');
 
 		<div class="input-group group-vertical <?=$field3['name'];?>">
 
-			<label class="input-title title-radio"><?=$field3['label'];?></label>
+			<label class="input-title title-radio"><strong><?=$field3['label'];?></strong></label>
 
 			<?foreach ($field3['choices'] as $field_key => $field_value) { ?>
 

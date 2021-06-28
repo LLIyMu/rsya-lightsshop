@@ -47,7 +47,7 @@ $url = get_template_directory_uri();
 	 	<?if ( is_user_logged_in() ) {?>
 	 	<!-- <div class="side-right">
 	 		<div class="sidebar">
-	 			<div class="sidebar-title">Поделитесь своими <br> впечателениями о сервисе</div>
+	 			<div class="sidebar-title">Поделитесь своими <br> впечатлениями о сервисе</div>
 	 		</div>
 	 		<form class="review-form sidebar-form-content" action="#" method="post">
 				<div class="input-group">

@@ -11,7 +11,7 @@ $main_attr[] = get_field_object('field_6001a8017ca4b', $postid); // Двухме
 $main_attr[] = get_field_object('field_5fd71e630cd1f', $postid); // Всего спальных мест
 $main_attr[] = get_field_object('field_60019e3645d2e', $postid); // Количество санузлов всего
 $main_attr[] = get_field_object('field_5fd7273e11a21', $postid); // Количество ванных комнат
-$main_attr[] = get_field_object('field_60a250e2a31ce', $postid); // Количество туалетов
+$main_attr[] = get_field_object('field_6064531334137', $postid); // Количество туалетов
 $main_attr[] = get_field_object('field_5fd71f7ce412a', $postid); // Расстояние до моря
 
 // Ценообразование
@@ -28,18 +28,89 @@ $location[] = get_field_object('field_5fe2e2ebd947e', $postid); // Корпус
 
 $disabilities[] = get_field_object('field_600919d84971f', $postid);
 
-foreach (acf_get_fields(310) as $field) {
-	$general[] = get_field_object($field['key'], $postid);
-}
-foreach (acf_get_fields(311) as $field) {
-	$bathrooms[] = get_field_object($field['key'], $postid);
-}
-foreach (acf_get_fields(371) as $field) {
-	$kitchen[] = get_field_object($field['key'], $postid);
-}
-foreach (acf_get_fields(332) as $field) {
-	$rooms[] = get_field_object($field['key'], $postid);
-}
+//foreach (acf_get_fields(310) as $field) {
+//	$general[] = get_field_object($field['key'], $postid);
+// }
+// foreach (acf_get_fields(311) as $field) { Закоментил 24052020
+//	$bathrooms[] = get_field_object($field['key'], $postid);
+// }
+$general[] = get_field_object('field_60057524eebd4', $postid); // Парковка
+$general[] = get_field_object('field_6005774f41bef', $postid); // Интернет
+$general[] = get_field_object('field_6008af39ef781', $postid); // Кухня(перенесено из кухни)
+$general[] = get_field_object('field_600577ac4928d', $postid); // Телевизор
+$general[] = get_field_object('field_602eb1bce5d78', $postid); // Кондиционер
+$general[] = get_field_object('field_60ab8ec14b87e', $postid); // Кондиционер количество
+$general[] = get_field_object('field_60057b98865b5', $postid); // Горячая вода
+$general[] = get_field_object('field_60057e268a6b6', $postid); // Отопление
+$general[] = get_field_object('field_60057e562e1bf', $postid); // Балкон\лоджия
+$general[] = get_field_object('field_60057e7c2e1c0', $postid); // Терраса
+$general[] = get_field_object('field_60057ee7e2ef0', $postid); // Видовые характеристики
+$general[] = get_field_object('field_60057f45e2ef1', $postid); // Сейф
+$general[] = get_field_object('field_600581180da66', $postid); // Домофон
+//$general[] = get_field_object('field_60792c963e8bd', $postid); // Лифт
+$general[] = get_field_object('field_6005812c0da67', $postid); // Пожарная сигнализация
+$general[] = get_field_object('field_600581490da68', $postid); // Система анти потоп
+$general[] = get_field_object('field_6005816d0da69', $postid); // Постельное белье
+$general[] = get_field_object('field_602eb23e2c2b3', $postid); // Ремонт
+$general[] = get_field_object('field_602eb45c27c38', $postid); // Охранная система
+$general[] = get_field_object('field_602eb4cae6289', $postid); // Уборка
+$general[] = get_field_object('field_6005818e0da6a', $postid); // Отчетные документы
+
+// $bathrooms[] = get_field_object('field_6005842ba1203', $postid); // Количество санузлов
+// $bathrooms[] = get_field_object('field_6064531334137', $postid); // Количество туалетов
+$bathrooms[] = get_field_object('field_602eb59a422c0', $postid); // Ванная комната
+$bathrooms[] = get_field_object('field_600586fd05d50', $postid); // Ванна
+$bathrooms[] = get_field_object('field_600587ab94792', $postid); // Душевая кабина
+$bathrooms[] = get_field_object('field_600587c1504ef', $postid); // Биде
+$bathrooms[] = get_field_object('field_600587f6fc36d', $postid); // Гигиенический душ
+$bathrooms[] = get_field_object('field_600588127403a', $postid); // Джакузи
+$bathrooms[] = get_field_object('field_6005883805012', $postid); // Сауна\/баня
+$bathrooms[] = get_field_object('field_6005884d05013', $postid); // Водонагреватель электрический
+$bathrooms[] = get_field_object('field_600588b37407d', $postid); // Водонагреватель газовый
+$bathrooms[] = get_field_object('field_600588e17407e', $postid); // Стиральная машина
+$bathrooms[] = get_field_object('field_600588f97407f', $postid); // Сушильная машина
+$bathrooms[] = get_field_object('field_6005ad2151be6', $postid); // Сушка для белья
+$bathrooms[] = get_field_object('field_6005ad4551be7', $postid); // Фен
+$bathrooms[] = get_field_object('field_6005ad5a51be8', $postid); // Полотенца
+$bathrooms[] = get_field_object('field_6005ad6f51be9', $postid); // Халат
+$bathrooms[] = get_field_object('field_6005ad8651bea', $postid); // Тапочки
+$bathrooms[] = get_field_object('field_6005ada851beb', $postid); // Туалетные принадлежности
+
+// foreach (acf_get_fields(371) as $field) {
+//	$kitchen[] = get_field_object($field['key'], $postid);
+// }
+// $kitchen[] = get_field_object('field_6008af39ef781', $postid); Кухня
+$kitchen[] = get_field_object('field_6008af7aef782', $postid);
+$kitchen[] = get_field_object('field_6008af9def783', $postid);
+$kitchen[] = get_field_object('field_6008afb8ef784', $postid);
+$kitchen[] = get_field_object('field_6008aff6ef785', $postid);
+$kitchen[] = get_field_object('field_6008b009ef786', $postid);
+$kitchen[] = get_field_object('field_6008b02bef787', $postid);
+$kitchen[] = get_field_object('field_6008b045ef788', $postid);
+$kitchen[] = get_field_object('field_6008b058ef789', $postid);
+$kitchen[] = get_field_object('field_6008b069ef78a', $postid);
+$kitchen[] = get_field_object('field_6008b07def78b', $postid);
+$kitchen[] = get_field_object('field_6008b097ef78c', $postid);
+$kitchen[] = get_field_object('field_6008b0a4ef78d', $postid);
+
+// foreach (acf_get_fields(332) as $field) {
+//	$rooms[] = get_field_object($field['key'], $postid);
+// }
+$rooms[] = get_field_object('field_600693ee44d7e', $postid);
+// $rooms[] = get_field_object('field_6006946744d80', $postid);
+// $rooms[] = get_field_object('field_6006947e44d81', $postid);
+$rooms[] = get_field_object('field_6006949b44d82', $postid);
+$rooms[] = get_field_object('field_600694bd44d83', $postid);
+$rooms[] = get_field_object('field_600694d244d84', $postid);
+$rooms[] = get_field_object('field_6006951344d85', $postid);
+$rooms[] = get_field_object('field_6006953444d86', $postid);
+$rooms[] = get_field_object('field_6006954a44d87', $postid);
+$rooms[] = get_field_object('field_6006956744d88', $postid);
+$rooms[] = get_field_object('field_6006957744d89', $postid);
+$rooms[] = get_field_object('field_6006958f44d8a', $postid);
+$rooms[] = get_field_object('field_6006959c44d8b', $postid);
+
+
 foreach (acf_get_fields(385) as $field) {
 	$child[] = get_field_object($field['key'], $postid);
 }
@@ -298,7 +369,7 @@ if ($postid) {
 <div class="form-section " id="verification">
 	<div class="heading">Верификация Владельца</div>
 	<div class="section-gray">
-		<div class="text-agreement"><label class="custom-checkbox"><input type="checkbox" name="agreement" class="custom-input" checked=""><div class="check"></div></label> <span class="text">Нажимая на кнопку Подтвердить, Я подтверждаю свое право на размещение данного объекта в краткосрочную аренду и соглашаюсь с <a href="#">Правилами размещения объекта</a></div>
+		<div class="text-agreement"><label class="custom-checkbox"><input type="checkbox" name="agreement" class="custom-input" checked=""><div class="check"></div></label> <span class="text">Нажимая на кнопку Подтвердить, Я подтверждаю свое право на размещение данного объекта в краткосрочную аренду, соглашаюсь с <a href="#">Правилами размещения объекта</a> и принимаю условия <a href="#">Договора оферты Владельцам</a></div>
 		
 		
 		
@@ -306,12 +377,12 @@ if ($postid) {
 			<input type="hidden" name="verification" value="confirm">
 			<div class="btn btn-confirm active">Подтвердить</div>
 
-			<div class="text-confirm" style="display: block;">Вы согласились с <a href="#">уловиями размещения</a> и подтвердили свои права на размещение</div>
+			<div class="text-confirm" style="display: block;">Вы согласились с <a href="#">Правилами размещения объекта</a>, приняли условия <a href="#">Договора оферты Владельцам</a> и подтвердили свои права на размещение</div>
 		<? } else { ?>
 			<input type="hidden" name="verification" value="">
 			<div class="btn btn-confirm">Подтвердить</div>
 
-			<div class="text-confirm">Вы согласились с <a href="#">уловиями размещения</a> и подтвердили свои права на размещение</div>
+			<div class="text-confirm">Вы согласились с <a href="#">Правилами размещения объекта</a>, приняли условия <a href="#">Договора оферты Владельцам</a> и подтвердили свои права на размещение</div>
 		<? } ?>
 	</div>
 </div>

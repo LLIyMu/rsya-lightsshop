@@ -12,12 +12,12 @@
 	
 	<div class="share"><span>Поделиться:</span> 
 		<div class="social">
-			<a href="https://vk.com/share.php?url=<?=get_permalink( $post->ID );?>" class="vk" target="_blank" rel="nofollow"></a>
-			<a href="https://www.facebook.com/sharer/sharer.php?u=<?=get_permalink( $post->ID );?>" class="fb" target="_blank" rel="nofollow"></a>
-			<a href="https://connect.ok.ru/offer?url=<?=get_permalink( $post->ID );?>" class="ok" target="_blank" rel="nofollow"></a>
-			<a href="https://telegram.me/share/url?url=<?=get_permalink( $post->ID );?>" class="telegram" target="_blank" rel="nofollow"></a>
-			<a href="whatsapp://send?text=<?=get_permalink( $post->ID );?>" class="whatsapp" target="_blank" rel="nofollow"></a>
-			<a href="viber://forward?text=<?=get_permalink( $post->ID );?>" class="viber" target="_blank" rel="nofollow"></a>
+			<a href="https://vk.com/share.php?url=<?=get_permalink( $hotel_id );?>" class="vk" target="_blank" rel="nofollow"></a>
+			<a href="https://www.facebook.com/sharer/sharer.php?u=<?=get_permalink( $hotel_id );?>" class="fb" target="_blank" rel="nofollow"></a>
+			<a href="https://connect.ok.ru/offer?url=<?=get_permalink( $hotel_id );?>" class="ok" target="_blank" rel="nofollow"></a>
+			<a href="https://telegram.me/share/url?url=<?=get_permalink( $hotel_id );?>" class="telegram" target="_blank" rel="nofollow"></a>
+			<a href="whatsapp://send?text=<?=get_permalink( $hotel_id );?>" class="whatsapp" target="_blank" rel="nofollow"></a>
+			<a href="viber://forward?text=<?=get_permalink( $hotel_id);?>" class="viber" target="_blank" rel="nofollow"></a>
 			<a href="<?=get_permalink();?>" class="share-link" id="share-link"></a>
 		</div>
 	</div>

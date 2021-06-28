@@ -20,7 +20,7 @@ global $current_user;
 
 <header class="<?=$static?>">
 	<div class="wrapper">
-		<?if ( is_user_logged_in() ) {?>
+		<?php if ( is_user_logged_in() ) {?>
 			<div class="header-left">
 				<div class="logo">
 					<a href="/">Krymking.ru</a>
@@ -36,7 +36,7 @@ global $current_user;
 				<a href="/messages/" class="btn btn-message"><span class="text-btn">Сообщения</span> <i class="icon-message"></i></a>
 				<div class="user-name"><div class="avatar"><?=user_photo($current_user);?></div><span class="text-btn"><?=$current_user->display_name;?></span></div>
 			</div>
-		<?} else {?>
+		<?php } else {?>
 			<div class="logo">
 				<a href="/">Krymking.ru</a>
 				<div class="logo-text">Посуточная аренда жилья <br> в Крыму</div>
@@ -58,7 +58,7 @@ global $current_user;
 				<div class="phone-text">Подберём, бесплатно <br> забронируем</div>
 				<div class="arrow"></div>
 			</div>
-		<?} ?>
+		<?php } ?>
 
 	</div>
 </header>
@@ -100,10 +100,9 @@ global $current_user;
 	</div>
 </div>
 
-<? if ( !is_user_logged_in() ) { ?>
-
-	<?get_template_part('front/auth');?>
-	<?get_template_part('front/register');?>
+<?php if ( !is_user_logged_in() ) { ?>
+	
+	<?php get_template_part('front/auth');?><?php get_template_part('front/register');?>
 
 	<div class="popup popup-tel">
 		<div class="popup-content">
@@ -114,7 +113,7 @@ global $current_user;
 		</div>
 	</div>
 
-<? } else { ?>
+<?php } else { ?>
 
 	<div class="popup popup-lk">
 		<div class="popup-content">
@@ -126,225 +125,71 @@ global $current_user;
 		</div>
 	</div>
 
-<? } ?>
+<?php } ?>
+<?php global $_CATEGORIES?>
 
-<div class="popup popup-objects popup-83">
-	<div class="popup-content">
-		<div class="popup-row">
-		<?
-		$taxonomies = get_terms( array(
-			'taxonomy' => 'hotel',
-			'hide_empty' => false,
-		) );
-		if (!empty($taxonomies)) { 
-			foreach($taxonomies as $category){ 
-				if($category->parent == 0){?>
-					<div class="popup-item">
-						<h3><?=$category->name;?></h3>
-						<ul class="city-list">
-							<?if($category->term_id !== 9) {?>
-							<li><a href="<?=get_category_link($category->term_id);?>?type=83"><?=$category->name;?></a></li>
-							<?}?>
-						<?foreach($taxonomies as $subcategory){?>
-							<?if($subcategory->parent == $category->term_id){?>
-								<li><a href="<?=get_category_link($subcategory->term_id);?>?type=83"><?=$subcategory->name;?></a></li>
-							<? } ?>
-						<?} ?>
-						</ul>
+<?php if(!empty($_CATEGORIES)):?>
+	<?php
+	global $_TAXONOMIES;
+	
+	$_TAXONOMIES = get_terms( array(
+       'taxonomy' => 'hotel',
+       'hide_empty' => false,
+       )
+	);
+	$_TAXONOMIES_POPULAR = [];
+	global $_TAXONOMIES_POPULAR;
+	
+	foreach($_TAXONOMIES as $key => $term){
+		$args = array(
+				'post_type' => 'hotels',
+				'hotel'=> $term->slug,
+				'numposts' => 0
+		);
+		
+		$query = new WP_Query;
+		
+		$Aposts = $query->query($args);
+		
+		$_TAXONOMIES[$key]->objectsCount = count($Aposts);
+		
+		$_TAXONOMIES_POPULAR[$term->term_id] = $_TAXONOMIES[$key];
+		
+	}
+	
+	?>
+	
+	<?php if(!empty($_TAXONOMIES)):?>
+		<?php foreach($_CATEGORIES as $catId => $catName):?>
+			<div class="popup popup-objects popup-<?=$catId?>">
+				<div class="popup-content">
+					<div class="popup-row">
+						<?php foreach($_TAXONOMIES as $category){
+							
+							if($category->parent == 0){
+								 ?>
+								<div class="popup-item">
+									<h3><?=$category->name?></h3>
+									<ul class="city-list">
+										<?php if($category->term_id !== 9) {?>
+											<li><a href="<?=get_category_link($category->term_id)?>?type=<?=$catId?>"><?=$category->name?>(<?=$category->objectsCount?>)</a></li>
+											<?php
+										}?>
+										<?php foreach($_TAXONOMIES as $subcategory){?><?php if($subcategory->parent == $category->term_id){?>
+											<li><a href="<?=get_category_link($subcategory->term_id);?>?type=<?=$catId?>"><?=$subcategory->name;?>(<?=$subcategory->objectsCount?>)</a></li>
+										<?php } ?><?php } ?>
+									</ul>
+								</div>
+								<?php
+							}
+						}?>
 					</div>
-				<?} 
-			}
-		} ?>
-		</div>
-	</div>
-</div>
-
-<div class="popup popup-objects popup-90">
-	<div class="popup-content">
-		<div class="popup-row">
-		<?
-		$taxonomies = get_terms( array(
-			'taxonomy' => 'hotel',
-			'hide_empty' => false,
-		) );
-		if (!empty($taxonomies)) { 
-			foreach($taxonomies as $category){ 
-				if($category->parent == 0){?>
-					<div class="popup-item">
-						<h3><?=$category->name;?></h3>
-						<ul class="city-list">
-							<?if($category->term_id !== 9) {?>
-							<li><a href="<?=get_category_link($category->term_id);?>?type=90"><?=$category->name;?></a></li>
-							<?}?>
-						<?foreach($taxonomies as $subcategory){?>
-							<?if($subcategory->parent == $category->term_id){?>
-								<li><a href="<?=get_category_link($subcategory->term_id);?>?type=90"><?=$subcategory->name;?></a></li>
-							<? } ?>
-						<?} ?>
-						</ul>
-					</div>
-				<?} 
-			}
-		} ?>
-		</div>
-	</div>
-</div>
-
-<div class="popup popup-objects popup-89">
-	<div class="popup-content">
-		<div class="popup-row">
-		<?
-		$taxonomies = get_terms( array(
-			'taxonomy' => 'hotel',
-			'hide_empty' => false,
-		) );
-		if (!empty($taxonomies)) { 
-			foreach($taxonomies as $category){ 
-				if($category->parent == 0){?>
-					<div class="popup-item">
-						<h3><?=$category->name;?></h3>
-						<ul class="city-list">
-							<?if($category->term_id !== 9) {?>
-							<li><a href="<?=get_category_link($category->term_id);?>?type=89"><?=$category->name;?></a></li>
-							<?}?>
-						<?foreach($taxonomies as $subcategory){?>
-							<?if($subcategory->parent == $category->term_id){?>
-								<li><a href="<?=get_category_link($subcategory->term_id);?>?type=89"><?=$subcategory->name;?></a></li>
-							<? } ?>
-						<?} ?>
-						</ul>
-					</div>
-				<?} 
-			}
-		} ?>
-		</div>
-	</div>
-</div>
-
-<div class="popup popup-objects popup-91">
-	<div class="popup-content">
-		<div class="popup-row">
-		<?
-		$taxonomies = get_terms( array(
-			'taxonomy' => 'hotel',
-			'hide_empty' => false,
-		) );
-		if (!empty($taxonomies)) { 
-			foreach($taxonomies as $category){ 
-				if($category->parent == 0){?>
-					<div class="popup-item">
-						<h3><?=$category->name;?></h3>
-						<ul class="city-list">
-							<?if($category->term_id !== 9) {?>
-							<li><a href="<?=get_category_link($category->term_id);?>?type=91"><?=$category->name;?></a></li>
-							<?}?>
-						<?foreach($taxonomies as $subcategory){?>
-							<?if($subcategory->parent == $category->term_id){?>
-								<li><a href="<?=get_category_link($subcategory->term_id);?>?type=91"><?=$subcategory->name;?></a></li>
-							<? } ?>
-						<?} ?>
-						</ul>
-					</div>
-				<?} 
-			}
-		} ?>
-		</div>
-	</div>
-</div>
-
-<div class="popup popup-objects popup-85">
-	<div class="popup-content">
-		<div class="popup-row">
-		<?
-		$taxonomies = get_terms( array(
-			'taxonomy' => 'hotel',
-			'hide_empty' => false,
-		) );
-		if (!empty($taxonomies)) { 
-			foreach($taxonomies as $category){ 
-				if($category->parent == 0){?>
-					<div class="popup-item">
-						<h3><?=$category->name;?></h3>
-						<ul class="city-list">
-							<?if($category->term_id !== 9) {?>
-							<li><a href="<?=get_category_link($category->term_id);?>?type=85"><?=$category->name;?></a></li>
-							<?}?>
-						<?foreach($taxonomies as $subcategory){?>
-							<?if($subcategory->parent == $category->term_id){?>
-								<li><a href="<?=get_category_link($subcategory->term_id);?>?type=85"><?=$subcategory->name;?></a></li>
-							<? } ?>
-						<?} ?>
-						</ul>
-					</div>
-				<?} 
-			}
-		} ?>
-		</div>
-	</div>
-</div>
-
-<div class="popup popup-objects popup-86">
-	<div class="popup-content">
-		<div class="popup-row">
-		<?
-		$taxonomies = get_terms( array(
-			'taxonomy' => 'hotel',
-			'hide_empty' => false,
-		) );
-		if (!empty($taxonomies)) { 
-			foreach($taxonomies as $category){ 
-				if($category->parent == 0){?>
-					<div class="popup-item">
-						<h3><?=$category->name;?></h3>
-						<ul class="city-list">
-							<?if($category->term_id !== 9) {?>
-							<li><a href="<?=get_category_link($category->term_id);?>?type=86"><?=$category->name;?></a></li>
-							<?}?>
-						<?foreach($taxonomies as $subcategory){?>
-							<?if($subcategory->parent == $category->term_id){?>
-								<li><a href="<?=get_category_link($subcategory->term_id);?>?type=86"><?=$subcategory->name;?></a></li>
-							<? } ?>
-						<?} ?>
-						</ul>
-					</div>
-				<?} 
-			}
-		} ?>
-		</div>
-	</div>
-</div>
-
-<div class="popup popup-objects popup-87">
-	<div class="popup-content">
-		<div class="popup-row">
-		<?
-		$taxonomies = get_terms( array(
-			'taxonomy' => 'hotel',
-			'hide_empty' => false,
-		) );
-		if (!empty($taxonomies)) { 
-			foreach($taxonomies as $category){ 
-				if($category->parent == 0){?>
-					<div class="popup-item">
-						<h3><?=$category->name;?></h3>
-						<ul class="city-list">
-							<?if($category->term_id !== 9) {?>
-							<li><a href="<?=get_category_link($category->term_id);?>?type=87"><?=$category->name;?></a></li>
-							<?}?>
-						<?foreach($taxonomies as $subcategory){?>
-							<?if($subcategory->parent == $category->term_id){?>
-								<li><a href="<?=get_category_link($subcategory->term_id);?>?type=87"><?=$subcategory->name;?></a></li>
-							<? } ?>
-						<?} ?>
-						</ul>
-					</div>
-				<?} 
-			}
-		} ?>
-		</div>
-	</div>
-</div>
-
+				</div>
+			</div>
+		<?php endforeach;?>
+		<?php $a=1?>
+	<?php endif;?>
+<?php endif;?>
  
 <div class="popup popup-currency">
 	<div class="popup-content">

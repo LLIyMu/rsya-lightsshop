@@ -80,6 +80,7 @@ get_header();
 		</div>
 
 		<? $variants = get_field('select_object', $post->ID);
+
 		if( $variants ) { ?>
 		<div class="variants" id="available-rooms">
 		<h2 class="block-header">Доступные номера</h2>

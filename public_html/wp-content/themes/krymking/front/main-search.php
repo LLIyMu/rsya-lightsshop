@@ -2,9 +2,9 @@
 	<form class="search-form" action="/hotels/" method="post">
 		<input type="hidden" name="action" value="main_search">
 		
-		<input type="hidden" name="adults" value="<?=guests_adults();?>">
-		<input type="hidden" name="children" value="<?=guests_childrens();?>">
-		<input type="hidden" name="babies" value="<?=guests_babies();?>">
+		<input type="hidden" name="adults" value="<?=guests_adults()?>">
+		<input type="hidden" name="children" value="<?=guests_childrens()?>">
+		<input type="hidden" name="babies" value="<?=guests_babies()?>">
 
 		<div class="search-content">
 			<div class="search-field">

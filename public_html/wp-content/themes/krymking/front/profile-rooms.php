@@ -1,4 +1,4 @@
-<?
+﻿<?
 global $postid;
 // Основные характеристики
 $main_attr[] = get_field_object('field_5fd719b126a08', $postid); // Количество принимаемых гостей
@@ -295,7 +295,7 @@ if (empty($_POST['choosed'])) {
 <div class="form-section " id="verification">
 	<div class="heading">Верификация Владельца</div>
 	<div class="section-gray">
-		<div class="text-agreement"><label class="custom-checkbox"><input type="checkbox" name="agreement" class="custom-input" checked=""><div class="check"></div></label> <span class="text">Нажимая на кнопку Подтвердить, Я подтверждаю свое право на размещение данного объекта в краткосрочную аренду и соглашаюсь с <a href="#">Правилами размещения объекта</a></div>
+		<div class="text-agreement"><label class="custom-checkbox"><input type="checkbox" name="agreement" class="custom-input" checked=""><div class="check"></div></label> <span class="text">Нажимая на кнопку Подтвердить, Я подтверждаю свое право на размещение данного объекта в краткосрочную аренду и соглашаюсь с <a href="#">Правилами размещения объекта</a> и принимаю условия <a href="#">Договора оферты Владельцам</a></div>
 		<div class="btn btn-confirm">Подтвердить</div>
 	</div>
 </div>

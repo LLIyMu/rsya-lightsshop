@@ -1,4 +1,4 @@
-<?
+﻿<?
 global $postid;
 // Основные характеристики
 $main_attr[] = get_field_object('field_60868176abfa4', $postid); // Площадь номера 
@@ -10,8 +10,62 @@ $main_attr[] = get_field_object('field_5fd71e630cd1f', $postid); // Всего �
 $main_attr[] = get_field_object('field_608685b5152bd', $postid); // Количество возможных дополнительных мест
 $main_attr[] = get_field_object('field_60019e3645d2e', $postid); // Количество санузлов всего
 $main_attr[] = get_field_object('field_5fd7273e11a21', $postid); // Количество ванных комнат
-$main_attr[] = get_field_object('field_600921bd474dc', $postid); // Питание
+// $main_attr[] = get_field_object('field_600921bd474dc', $postid); // Питание
+$main_attr[] = get_field_object('field_6064531334137', $postid); // Количество туалетов
 $main_attr[] = get_field_object('field_6086857195eab', $postid); // Количество номеров этого типа
+
+$generalrom[] = get_field_object('field_600577ac4928d', $post_id); // Телевизор
+$generalrom[] = get_field_object('field_6005774f41bef', $postid); // Интернет
+$generalrom[] = get_field_object('field_602eb1bce5d78', $post_id); // Кондиционер
+$generalrom[] = get_field_object('field_60ab8ec14b87e', $postid); // Кондиционер количество
+$generalrom[] = get_field_object('field_60057ee7e2ef0', $postid); // Видовые характеристики
+$generalrom[] = get_field_object('field_6008afb8ef784', $post_id); // Холодильник
+$generalrom[] = get_field_object('field_6008b02bef787', $post_id); // Электрический чайник
+$generalrom[] = get_field_object('field_6008aff6ef785', $post_id); // Микроволновая печь
+$generalrom[] = get_field_object('field_6005ad4551be7', $post_id); // Фен
+$generalrom[] = get_field_object('field_6005ada851beb', $post_id); // Туалетные принадлежности
+$generalrom[] = get_field_object('field_6008af39ef781', $post_id); // Кухня
+$generalrom[] = get_field_object('field_60057e562e1bf', $post_id); // Балкон/лоджия
+$generalrom[] = get_field_object('field_60057e7c2e1c0', $postid); // Терраса
+$generalrom[] = get_field_object('field_60057f45e2ef1', $post_id); // Сейф
+$generalrom[] = get_field_object('field_60057e268a6b6', $post_id); // Отопление
+$generalrom[] = get_field_object('field_6005812c0da67', $post_id); // Пожарная сигнализация
+$generalrom[] = get_field_object('field_60057b98865b5', $post_id); // Горячая вода
+$generalrom[] = get_field_object('field_600581180da66', $post_id); // Домофон
+$generalrom[] = get_field_object('field_602eb45c27c38', $post_id); // Охранная система
+$generalrom[] = get_field_object('field_600581490da68', $post_id); // Система Антипотоп
+$generalrom[] = get_field_object('field_602eb23e2c2b3', $post_id); // Ремонт
+
+// $suzelroom[] = get_field_object('field_6005842ba1203', $postid); // Количество санузлов
+// $suzelroom[] = get_field_object('field_6064531334137', $postid); // Количество туалетов
+$suzelroom[] = get_field_object('field_600586fd05d50', $postid); // Ванна
+$suzelroom[] = get_field_object('field_600587ab94792', $postid); // Душевая кабина
+$suzelroom[] = get_field_object('field_600587c1504ef', $postid); // Биде
+$suzelroom[] = get_field_object('field_600587f6fc36d', $postid); // Гигиенический душ
+$suzelroom[] = get_field_object('field_600588127403a', $postid); // Джакузи
+$suzelroom[] = get_field_object('field_6005884d05013', $postid); // Водонагреватель электрический
+$suzelroom[] = get_field_object('field_600588b37407d', $postid); // Водонагреватель газовый
+$suzelroom[] = get_field_object('field_600588e17407e', $postid); // Стиральная машина
+$suzelroom[] = get_field_object('field_600588f97407f', $postid); // Сушильная машина
+$suzelroom[] = get_field_object('field_6005ad2151be6', $postid); // Сушка для белья
+$suzelroom[] = get_field_object('field_6005ad5a51be8', $postid); // Полотенца
+$suzelroom[] = get_field_object('field_6005ad6f51be9', $postid); // Халат
+$suzelroom[] = get_field_object('field_6005ad8651bea', $postid); // Тапочки
+
+$roomsglav[] = get_field_object('field_600693ee44d7e', $postid); // Вентилятор
+// $roomsglav[] = get_field_object('field_6006946744d80', $postid); // Кабельное телевидение
+// $roomsglav[] = get_field_object('field_6006947e44d81', $postid); // Интернет телевидение
+$roomsglav[] = get_field_object('field_6005816d0da69', $postid); // Постельное белье
+$roomsglav[] = get_field_object('field_6006949b44d82', $postid); // Утюг
+$roomsglav[] = get_field_object('field_600694bd44d83', $postid); // Гладильная доска
+$roomsglav[] = get_field_object('field_600694d244d84', $postid); // Пылесос
+$roomsglav[] = get_field_object('field_6006951344d85', $postid); // Стол/рабочее место
+$roomsglav[] = get_field_object('field_6006953444d86', $postid); // Диван
+$roomsglav[] = get_field_object('field_6006954a44d87', $postid); // Шкаф/комод
+$roomsglav[] = get_field_object('field_6006956744d88', $postid); // ПК или ноутбук
+$roomsglav[] = get_field_object('field_6006957744d89', $postid); // Москитная сетка
+$roomsglav[] = get_field_object('field_6006958f44d8a', $postid); // Камин
+$roomsglav[] = get_field_object('field_6006959c44d8b', $postid); // Электрический обогреватель
  
 // Ценообразование
 foreach (acf_get_fields(357) as $field) {
@@ -60,12 +114,14 @@ if (empty($_POST['choosed'])) {
 
 	<div class="heading show-more">Общие удобства</div>
 	<div class="form-group section-gray hide-param">
-		<?=main_fields( generalRoom( $postid ) );?>
+                <?=main_fields($generalrom);?>
+	        <?// =main_fields( generalRoom( $postid ) );?>
 	</div>
 
 	<div class="heading">Санузлы</div>
 	<div class="form-group section-gray hide-param">
-		<?=main_fields( sanuzelRoom( $postid ) );?>
+                <?=main_fields($suzelroom);?>
+		<?// =main_fields( sanuzelRoom( $postid ) );?>
 	</div>
 
 	<div class="heading">Кухня</div>
@@ -75,7 +131,8 @@ if (empty($_POST['choosed'])) {
 
 	<div class="heading">Комнаты</div>
 	<div class="form-group section-gray hide-param">
-		<?=main_fields( roomsRoom( $postid ) );?>
+                <?=main_fields($roomsglav);?>
+		<?// =main_fields( roomsRoom( $postid ) );?>
 	</div>
 
 	<div class="heading">Детям</div>
@@ -220,7 +277,7 @@ if (empty($_POST['choosed'])) {
 <div class="form-section " id="verification">
 	<div class="heading">Верификация Владельца</div>
 	<div class="section-gray">
-		<div class="text-agreement"><label class="custom-checkbox"><input type="checkbox" name="agreement" class="custom-input" checked=""><div class="check"></div></label> <span class="text">Нажимая на кнопку Подтвердить, Я подтверждаю свое право на размещение данного объекта в краткосрочную аренду и соглашаюсь с <a href="#">Правилами размещения объекта</a></div>
+		<div class="text-agreement"><label class="custom-checkbox"><input type="checkbox" name="agreement" class="custom-input" checked=""><div class="check"></div></label> <span class="text">Нажимая на кнопку Подтвердить, Я подтверждаю свое право на размещение данного объекта в краткосрочную аренду, соглашаюсь с <a href="#">Правилами размещения объекта</a></div>
 		<div class="btn btn-confirm">Подтвердить</div>
 	</div>
 </div>

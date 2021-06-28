@@ -130,23 +130,6 @@ $service[] = get_field_object('field_60092180474db', $post_id); // Парков�
 
 			<? $posts = get_post( $post_id ); ?>
 			<? if( $posts->post_content ) { ?>
-
-
-                <div class="room-parameters room-param">
-                    
-                    <div class="hidden" style="display: block;">
-                        <ul class="attributes-line attributes-flex">
-                            <? foreach (fields($attr) as $field) { ?>
-                                <li><strong><?=$field['label'];?>: </strong> <?=$field['value'];?></li>
-                            <? } ?>
-                        </ul>
-                    </div>
-                </div>
-
-
-
-
-
 				<div class="desc">
 					<div class="block-header">Описание отеля</div>
 					<?=$posts->post_content;?>
@@ -156,7 +139,16 @@ $service[] = get_field_object('field_60092180474db', $post_id); // Парков�
 
 		</div>
  
-
+		<div class="room-parameters room-param">
+			<h3>Общие характеристики отеля <div class="param-collapse">Подробнее</div></h3>
+			<div class="hidden">
+				<ul class="attributes-line attributes-flex">
+				<? foreach (fields($attr) as $field) { ?>
+					<li><strong><?=$field['label'];?>: </strong> <?=$field['value'];?></li>
+				<? } ?>
+				</ul>
+			</div>
+		</div>
 
 		<div class="room-parameters room-param">
 			<h3>Внутри или на территории отеля <div class="param-collapse">Подробнее</div></h3>

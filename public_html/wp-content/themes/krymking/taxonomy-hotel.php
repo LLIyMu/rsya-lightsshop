@@ -208,7 +208,9 @@ function init() {
           $('.show-map').click();
         }
 
-        $('html, body').animate({ scrollTop: 0 }, 'slow');
+          $('html, body').animate({ scrollTop: document.querySelector('.side-right.show-maps').getBoundingClientRect().top + pageYOffset }, 'slow', function(){
+              console.log(document.querySelector('.side-right.show-maps').getBoundingClientRect().top + pageYOffset)
+          });
       });
 
       },

@@ -113,7 +113,6 @@ if (!empty($_POST['send'])) {
 			$result['message'] = $post_id->get_error_message();
 		} else {
 
-
 		    $result['status'] = 'success';
 			$result['message'] = 'Бронирование № '.SecondLastPostId();
 
